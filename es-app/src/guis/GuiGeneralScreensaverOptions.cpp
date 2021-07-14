@@ -13,7 +13,7 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
 	// screensaver time
 	auto screensaver_time = std::make_shared<SliderComponent>(mWindow, 0.f, 30.f, 1.f, "m");
 	screensaver_time->setValue((float)(Settings::getInstance()->getInt("ScreenSaverTime") / Settings::ONE_MINUTE_IN_MS));
-	addWithLabel("SCREENSAVER AFTER", screensaver_time);
+	addWithLabel("以下时间后启动屏保", screensaver_time);
 	addSaveFunc([screensaver_time] {
 		Settings::getInstance()->setInt("ScreenSaverTime", (int)Math::round(screensaver_time->getValue()) * Settings::ONE_MINUTE_IN_MS);
 		PowerSaver::updateTimeouts();
@@ -50,13 +50,13 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
 
 	// show filtered menu
 	row.elements.clear();
-	row.addElement(std::make_shared<TextComponent>(mWindow, "VIDEO SCREENSAVER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+	row.addElement(std::make_shared<TextComponent>(mWindow, "视频屏保设置", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 	row.addElement(makeArrow(mWindow), false);
 	row.makeAcceptInputHandler(std::bind(&GuiGeneralScreensaverOptions::openVideoScreensaverOptions, this));
 	addRow(row);
 
 	row.elements.clear();
-	row.addElement(std::make_shared<TextComponent>(mWindow, "SLIDESHOW SCREENSAVER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+	row.addElement(std::make_shared<TextComponent>(mWindow, "幻灯片屏保设置", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 	row.addElement(makeArrow(mWindow), false);
 	row.makeAcceptInputHandler(std::bind(&GuiGeneralScreensaverOptions::openSlideshowScreensaverOptions, this));
 	addRow(row);
@@ -94,9 +94,9 @@ GuiGeneralScreensaverOptions::~GuiGeneralScreensaverOptions()
 }
 
 void GuiGeneralScreensaverOptions::openVideoScreensaverOptions() {
-	mWindow->pushGui(new GuiVideoScreensaverOptions(mWindow, "VIDEO SCREENSAVER"));
+	mWindow->pushGui(new GuiVideoScreensaverOptions(mWindow, "视频屏保"));
 }
 
 void GuiGeneralScreensaverOptions::openSlideshowScreensaverOptions() {
-    mWindow->pushGui(new GuiSlideshowScreensaverOptions(mWindow, "SLIDESHOW SCREENSAVER"));
+    mWindow->pushGui(new GuiSlideshowScreensaverOptions(mWindow, "幻灯片屏保"));
 }
