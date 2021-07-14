@@ -29,8 +29,8 @@ void GuiCollectionSystemsOptions::initializeMenu()
 	{
 		addEntry("从主题创建新的自定义收藏集", 0x777777FF, true,
 		[this, unusedFolders] {
-			auto s = new GuiSettings(mWindow, "SELECT THEME FOLDER");
-			std::shared_ptr< OptionListComponent<std::string> > folderThemes = std::make_shared< OptionListComponent<std::string> >(mWindow, "SELECT THEME FOLDER", true);
+			auto s = new GuiSettings(mWindow, "选择主题文件夹");
+			std::shared_ptr< OptionListComponent<std::string> > folderThemes = std::make_shared< OptionListComponent<std::string> >(mWindow, "选择主题文件夹", true);
 
 			// add Custom Systems
 			for(auto it = unusedFolders.cbegin() ; it != unusedFolders.cend() ; it++ )
@@ -77,12 +77,12 @@ void GuiCollectionSystemsOptions::initializeMenu()
 
 	toggleSystemNameInCollections = std::make_shared<SwitchComponent>(mWindow);
 	toggleSystemNameInCollections->setState(Settings::getInstance()->getBool("CollectionShowSystemInfo"));
-	mMenu.addWithLabel("SHOW SYSTEM NAME IN COLLECTIONS", toggleSystemNameInCollections);
+	mMenu.addWithLabel("在收藏集中显示系统名称", toggleSystemNameInCollections);
 
 	if(CollectionSystemManager::get()->isEditing())
 	{
 		row.elements.clear();
-		row.addElement(std::make_shared<TextComponent>(mWindow, "FINISH EDITING '" + Utils::String::toUpper(CollectionSystemManager::get()->getEditingCollection()) + "' COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+		row.addElement(std::make_shared<TextComponent>(mWindow, "完成编辑'" + Utils::String::toUpper(CollectionSystemManager::get()->getEditingCollection()) + "' 收藏集", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 		row.makeAcceptInputHandler(std::bind(&GuiCollectionSystemsOptions::exitEditMode, this));
 		mMenu.addRow(row);
 	}
@@ -143,7 +143,7 @@ void GuiCollectionSystemsOptions::addSystemsToMenu()
 
 	std::map<std::string, CollectionSystemData> autoSystems = CollectionSystemManager::get()->getAutoCollectionSystems();
 
-	autoOptionList = std::make_shared< OptionListComponent<std::string> >(mWindow, "SELECT COLLECTIONS", true);
+	autoOptionList = std::make_shared< OptionListComponent<std::string> >(mWindow, "选择收藏集", true);
 
 	// add Auto Systems
 	for(std::map<std::string, CollectionSystemData>::const_iterator it = autoSystems.cbegin() ; it != autoSystems.cend() ; it++ )
@@ -154,7 +154,7 @@ void GuiCollectionSystemsOptions::addSystemsToMenu()
 
 	std::map<std::string, CollectionSystemData> customSystems = CollectionSystemManager::get()->getCustomCollectionSystems();
 
-	customOptionList = std::make_shared< OptionListComponent<std::string> >(mWindow, "SELECT COLLECTIONS", true);
+	customOptionList = std::make_shared< OptionListComponent<std::string> >(mWindow, "选择收藏集", true);
 
 	// add Custom Systems
 	for(std::map<std::string, CollectionSystemData>::const_iterator it = customSystems.cbegin() ; it != customSystems.cend() ; it++ )

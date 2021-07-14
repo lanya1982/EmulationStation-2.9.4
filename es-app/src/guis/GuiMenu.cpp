@@ -89,7 +89,7 @@ void GuiMenu::openScraperSettings()
 
 void GuiMenu::openSoundSettings()
 {
-	auto s = new GuiSettings(mWindow, "SOUND SETTINGS");
+	auto s = new GuiSettings(mWindow, "声音设置");
 
 	// volume
 	auto volume = std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
@@ -101,7 +101,7 @@ void GuiMenu::openSoundSettings()
 	{
 #if defined(__linux__)
 		// audio card
-		auto audio_card = std::make_shared< OptionListComponent<std::string> >(mWindow, "AUDIO CARD", false);
+		auto audio_card = std::make_shared< OptionListComponent<std::string> >(mWindow, "声卡", false);
 		std::vector<std::string> audio_cards;
 		audio_cards.push_back("default");
 		audio_cards.push_back("sysdefault");
@@ -116,7 +116,7 @@ void GuiMenu::openSoundSettings()
 		}
 		for(auto ac = audio_cards.cbegin(); ac != audio_cards.cend(); ac++)
 			audio_card->add(*ac, *ac, Settings::getInstance()->getString("AudioCard") == *ac);
-		s->addWithLabel("AUDIO CARD", audio_card);
+		s->addWithLabel("声卡", audio_card);
 		s->addSaveFunc([audio_card] {
 			Settings::getInstance()->setString("AudioCard", audio_card->getSelected());
 			VolumeControl::getInstance()->deinit();
@@ -342,7 +342,7 @@ void GuiMenu::openUISettings()
 			systemfocus_list->add((*it)->getName(), (*it)->getName(), Settings::getInstance()->getString("StartupSystem") == (*it)->getName());
 		}
 	}
-	s->addWithLabel("START ON SYSTEM", systemfocus_list);
+	s->addWithLabel("开机默认平台", systemfocus_list);
 	s->addSaveFunc([systemfocus_list] {
 		Settings::getInstance()->setString("StartupSystem", systemfocus_list->getSelected());
 	});
@@ -350,13 +350,13 @@ void GuiMenu::openUISettings()
 	// show help
 	auto show_help = std::make_shared<SwitchComponent>(mWindow);
 	show_help->setState(Settings::getInstance()->getBool("ShowHelpPrompts"));
-	s->addWithLabel("ON-SCREEN HELP", show_help);
+	s->addWithLabel("按键提示", show_help);
 	s->addSaveFunc([show_help] { Settings::getInstance()->setBool("ShowHelpPrompts", show_help->getState()); });
 
 	// enable filters (ForceDisableFilters)
 	auto enable_filter = std::make_shared<SwitchComponent>(mWindow);
 	enable_filter->setState(!Settings::getInstance()->getBool("ForceDisableFilters"));
-	s->addWithLabel("ENABLE FILTERS", enable_filter);
+	s->addWithLabel("启用过滤器", enable_filter);
 	s->addSaveFunc([enable_filter] {
 		bool filter_is_enabled = !Settings::getInstance()->getBool("ForceDisableFilters");
 		Settings::getInstance()->setBool("ForceDisableFilters", !enable_filter->getState());
@@ -366,7 +366,7 @@ void GuiMenu::openUISettings()
 	// hide start menu in Kid Mode
 	auto disable_start = std::make_shared<SwitchComponent>(mWindow);
 	disable_start->setState(Settings::getInstance()->getBool("DisableKidStartMenu"));
-	s->addWithLabel("DISABLE START MENU IN KID MODE", disable_start);
+	s->addWithLabel("在KID（儿童）模式下禁用设置菜单", disable_start);
 	s->addSaveFunc([disable_start] { Settings::getInstance()->setBool("DisableKidStartMenu", disable_start->getState()); });
 
 	mWindow->pushGui(s);
@@ -424,7 +424,7 @@ void GuiMenu::openOtherSettings()
 
 	auto local_art = std::make_shared<SwitchComponent>(mWindow);
 	local_art->setState(Settings::getInstance()->getBool("LocalArt"));
-	s->addWithLabel("SEARCH FOR LOCAL ART", local_art);
+	s->addWithLabel("查找本地资源", local_art);
 	s->addSaveFunc([local_art] { Settings::getInstance()->setBool("LocalArt", local_art->getState()); });
 
 	// hidden files
@@ -485,7 +485,7 @@ void GuiMenu::openQuitMenu()
 	if (UIModeController::getInstance()->isUIModeFull())
 	{
 		row.makeAcceptInputHandler([window] {
-			window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "是",
+			window->pushGui(new GuiMsgBox(window, "确定重启吗?", "是",
 				[] {
 				Scripting::fireEvent("quit");
 				if(quitES(QuitMode::RESTART) != 0)
@@ -501,7 +501,7 @@ void GuiMenu::openQuitMenu()
 		{
 			row.elements.clear();
 			row.makeAcceptInputHandler([window] {
-				window->pushGui(new GuiMsgBox(window, "REALLY QUIT?", "是",
+				window->pushGui(new GuiMsgBox(window, "确定退出吗?", "是",
 					[] {
 					Scripting::fireEvent("quit");
 					quitES();
@@ -513,7 +513,7 @@ void GuiMenu::openQuitMenu()
 	}
 	row.elements.clear();
 	row.makeAcceptInputHandler([window] {
-		window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "是",
+		window->pushGui(new GuiMsgBox(window, "确定重启吗?", "是",
 			[] {
 			Scripting::fireEvent("quit", "reboot");
 			Scripting::fireEvent("reboot");
@@ -526,7 +526,7 @@ void GuiMenu::openQuitMenu()
 
 	row.elements.clear();
 	row.makeAcceptInputHandler([window] {
-		window->pushGui(new GuiMsgBox(window, "REALLY SHUTDOWN?", "是",
+		window->pushGui(new GuiMsgBox(window, "确定关机吗?", "是",
 			[] {
 			Scripting::fireEvent("quit", "shutdown");
 			Scripting::fireEvent("shutdown");

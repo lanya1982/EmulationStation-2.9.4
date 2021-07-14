@@ -22,7 +22,7 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
 	// Allow ScreenSaver Controls - ScreenSaverControls
 	auto ss_controls = std::make_shared<SwitchComponent>(mWindow);
 	ss_controls->setState(Settings::getInstance()->getBool("ScreenSaverControls"));
-	addWithLabel("SCREENSAVER CONTROLS", ss_controls);
+	addWithLabel("屏幕保护控制", ss_controls);
 	addSaveFunc([ss_controls] { Settings::getInstance()->setBool("ScreenSaverControls", ss_controls->getState()); });
 
 	// screensaver behavior
@@ -34,7 +34,7 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
 	screensavers.push_back("slideshow");
 	for(auto it = screensavers.cbegin(); it != screensavers.cend(); it++)
 		screensaver_behavior->add(*it, *it, Settings::getInstance()->getString("ScreenSaverBehavior") == *it);
-	addWithLabel("SCREENSAVER BEHAVIOR", screensaver_behavior);
+	addWithLabel("屏保行为", screensaver_behavior);
 	addSaveFunc([this, screensaver_behavior] {
 		if (Settings::getInstance()->getString("ScreenSaverBehavior") != "random video" && screensaver_behavior->getSelected() == "random video") {
 			// if before it wasn't risky but now there's a risk of problems, show warning
