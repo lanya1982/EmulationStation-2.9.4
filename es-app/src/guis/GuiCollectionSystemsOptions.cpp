@@ -9,7 +9,7 @@
 #include "CollectionSystemManager.h"
 #include "Window.h"
 
-GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window) : GuiComponent(window), mMenu(window, "GAME COLLECTION SETTINGS")
+GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window) : GuiComponent(window), mMenu(window, "游戏收藏集设置")
 {
 	initializeMenu();
 }
@@ -27,7 +27,7 @@ void GuiCollectionSystemsOptions::initializeMenu()
 	std::vector<std::string> unusedFolders = CollectionSystemManager::get()->getUnusedSystemsFromTheme();
 	if (unusedFolders.size() > 0)
 	{
-		addEntry("CREATE NEW CUSTOM COLLECTION FROM THEME", 0x777777FF, true,
+		addEntry("从主题创建新的自定义收藏集", 0x777777FF, true,
 		[this, unusedFolders] {
 			auto s = new GuiSettings(mWindow, "SELECT THEME FOLDER");
 			std::shared_ptr< OptionListComponent<std::string> > folderThemes = std::make_shared< OptionListComponent<std::string> >(mWindow, "SELECT THEME FOLDER", true);
@@ -52,7 +52,7 @@ void GuiCollectionSystemsOptions::initializeMenu()
 	}
 
 	ComponentListRow row;
-	row.addElement(std::make_shared<TextComponent>(mWindow, "CREATE NEW CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+	row.addElement(std::make_shared<TextComponent>(mWindow, "创建新的自定义收藏集", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 	auto createCustomCollection = [this](const std::string& newVal) {
 		std::string name = newVal;
 		// we need to store the first Gui and remove it, as it'll be deleted by the actual Gui
@@ -69,11 +69,11 @@ void GuiCollectionSystemsOptions::initializeMenu()
 
 	bundleCustomCollections = std::make_shared<SwitchComponent>(mWindow);
 	bundleCustomCollections->setState(Settings::getInstance()->getBool("UseCustomCollectionsSystem"));
-	mMenu.addWithLabel("GROUP UNTHEMED CUSTOM COLLECTIONS", bundleCustomCollections);
+	mMenu.addWithLabel("归类无主题的自定义收藏集", bundleCustomCollections);
 
 	sortAllSystemsSwitch = std::make_shared<SwitchComponent>(mWindow);
 	sortAllSystemsSwitch->setState(Settings::getInstance()->getBool("SortAllSystems"));
-	mMenu.addWithLabel("SORT CUSTOM COLLECTIONS AND SYSTEMS", sortAllSystemsSwitch);
+	mMenu.addWithLabel("排序自定义收藏集和机种", sortAllSystemsSwitch);
 
 	toggleSystemNameInCollections = std::make_shared<SwitchComponent>(mWindow);
 	toggleSystemNameInCollections->setState(Settings::getInstance()->getBool("CollectionShowSystemInfo"));
@@ -87,7 +87,7 @@ void GuiCollectionSystemsOptions::initializeMenu()
 		mMenu.addRow(row);
 	}
 
-	mMenu.addButton("BACK", "back", std::bind(&GuiCollectionSystemsOptions::applySettings, this));
+	mMenu.addButton("返回", "back", std::bind(&GuiCollectionSystemsOptions::applySettings, this));
 
 	mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x()) / 2, Renderer::getScreenHeight() * 0.15f);
 }
@@ -150,7 +150,7 @@ void GuiCollectionSystemsOptions::addSystemsToMenu()
 	{
 		autoOptionList->add(it->second.decl.longName, it->second.decl.name, it->second.isEnabled);
 	}
-	mMenu.addWithLabel("AUTOMATIC GAME COLLECTIONS", autoOptionList);
+	mMenu.addWithLabel("自动收藏集", autoOptionList);
 
 	std::map<std::string, CollectionSystemData> customSystems = CollectionSystemManager::get()->getCustomCollectionSystems();
 
@@ -161,7 +161,7 @@ void GuiCollectionSystemsOptions::addSystemsToMenu()
 	{
 		customOptionList->add(it->second.decl.longName, it->second.decl.name, it->second.isEnabled);
 	}
-	mMenu.addWithLabel("CUSTOM GAME COLLECTIONS", customOptionList);
+	mMenu.addWithLabel("自定义游戏收藏集", customOptionList);
 }
 
 void GuiCollectionSystemsOptions::applySettings()
