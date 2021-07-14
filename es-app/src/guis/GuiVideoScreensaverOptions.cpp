@@ -11,7 +11,7 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
 	// timeout to swap videos
 	auto swap = std::make_shared<SliderComponent>(mWindow, 10.f, 1000.f, 1.f, "s");
 	swap->setValue((float)(Settings::getInstance()->getInt("ScreenSaverSwapVideoTimeout") / (1000)));
-	addWithLabel("SWAP VIDEO AFTER (SECS)", swap);
+	addWithLabel("视频切换间隔(秒)", swap);
 	addSaveFunc([swap] {
 		int playNextTimeout = (int)Math::round(swap->getValue()) * (1000);
 		Settings::getInstance()->setInt("ScreenSaverSwapVideoTimeout", playNextTimeout);
@@ -20,13 +20,13 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
 
 	auto stretch_screensaver = std::make_shared<SwitchComponent>(mWindow);
 	stretch_screensaver->setState(Settings::getInstance()->getBool("StretchVideoOnScreenSaver"));
-	addWithLabel("STRETCH VIDEO ON SCREENSAVER", stretch_screensaver);
+	addWithLabel("拉伸视频至全屏", stretch_screensaver);
 	addSaveFunc([stretch_screensaver] { Settings::getInstance()->setBool("StretchVideoOnScreenSaver", stretch_screensaver->getState()); });
 
 #ifdef _RPI_
 	auto ss_omx = std::make_shared<SwitchComponent>(mWindow);
 	ss_omx->setState(Settings::getInstance()->getBool("ScreenSaverOmxPlayer"));
-	addWithLabel("USE OMX PLAYER FOR SCREENSAVER", ss_omx);
+	addWithLabel("使用OMX视频播放器播放屏保", ss_omx);
 	addSaveFunc([ss_omx, this] { Settings::getInstance()->setBool("ScreenSaverOmxPlayer", ss_omx->getState()); });
 #endif
 
@@ -38,7 +38,7 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
 	info_type.push_back("never");
 	for(auto it = info_type.cbegin(); it != info_type.cend(); it++)
 		ss_info->add(*it, *it, Settings::getInstance()->getString("ScreenSaverGameInfo") == *it);
-	addWithLabel("SHOW GAME INFO ON SCREENSAVER", ss_info);
+	addWithLabel("在屏保中显示游戏信息", ss_info);
 	addSaveFunc([ss_info, this] { Settings::getInstance()->setString("ScreenSaverGameInfo", ss_info->getSelected()); });
 
 #ifdef _RPI_
