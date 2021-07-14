@@ -325,9 +325,9 @@ int main(int argc, char* argv[])
 
 		if(splashScreen)
 		{
-			std::string progressText = "Loading...";
+			std::string progressText = "系统加载中...";
 			if (splashScreenProgress)
-				progressText = "Loading system config...";
+				progressText = "系统配置加载中...";
 			window.renderLoadingScreen(progressText);
 		}
 	}
@@ -347,7 +347,7 @@ int main(int argc, char* argv[])
 		// we can't handle es_systems.cfg file problems inside ES itself, so display the error message then quit
 		window.pushGui(new GuiMsgBox(&window,
 			errorMsg,
-			"QUIT", [] {
+			"退出", [] {
 				SDL_Event* quit = new SDL_Event();
 				quit->type = SDL_QUIT;
 				SDL_PushEvent(quit);
@@ -368,7 +368,7 @@ int main(int argc, char* argv[])
 	ViewController::get()->preload();
 
 	if(splashScreen && splashScreenProgress)
-		window.renderLoadingScreen("Done.");
+		window.renderLoadingScreen("完成.");
 
 	//choose which GUI to open depending on if an input configuration already exists
 	if(errorMsg == NULL)
