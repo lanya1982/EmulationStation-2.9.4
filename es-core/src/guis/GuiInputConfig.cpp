@@ -18,31 +18,31 @@ struct InputConfigStructure
 static const int inputCount = 25;
 static const InputConfigStructure GUI_INPUT_CONFIG_LIST[inputCount] =
 {
-	{ "Up",               false, "D-PAD UP",           ":/help/dpad_up.svg" },
-	{ "Down",             false, "D-PAD DOWN",         ":/help/dpad_down.svg" },
-	{ "Left",             false, "D-PAD LEFT",         ":/help/dpad_left.svg" },
-	{ "Right",            false, "D-PAD RIGHT",        ":/help/dpad_right.svg" },
-	{ "Start",            true,  "START",              ":/help/button_start.svg" },
-	{ "Select",           true,  "SELECT",             ":/help/button_select.svg" },
-	{ "A",                false, "BUTTON A / EAST",    ":/help/buttons_east.svg" },
-	{ "B",                true,  "BUTTON B / SOUTH",   ":/help/buttons_south.svg" },
-	{ "X",                true,  "BUTTON X / NORTH",   ":/help/buttons_north.svg" },
-	{ "Y",                true,  "BUTTON Y / WEST",    ":/help/buttons_west.svg" },
-	{ "LeftShoulder",     true,  "LEFT SHOULDER",      ":/help/button_l.svg" },
-	{ "RightShoulder",    true,  "RIGHT SHOULDER",     ":/help/button_r.svg" },
-	{ "LeftTrigger",      true,  "LEFT TRIGGER",       ":/help/button_lt.svg" },
-	{ "RightTrigger",     true,  "RIGHT TRIGGER",      ":/help/button_rt.svg" },
-	{ "LeftThumb",        true,  "LEFT THUMB",         ":/help/analog_thumb.svg" },
-	{ "RightThumb",       true,  "RIGHT THUMB",        ":/help/analog_thumb.svg" },
-	{ "LeftAnalogUp",     true,  "LEFT ANALOG UP",     ":/help/analog_up.svg" },
-	{ "LeftAnalogDown",   true,  "LEFT ANALOG DOWN",   ":/help/analog_down.svg" },
-	{ "LeftAnalogLeft",   true,  "LEFT ANALOG LEFT",   ":/help/analog_left.svg" },
-	{ "LeftAnalogRight",  true,  "LEFT ANALOG RIGHT",  ":/help/analog_right.svg" },
-	{ "RightAnalogUp",    true,  "RIGHT ANALOG UP",    ":/help/analog_up.svg" },
-	{ "RightAnalogDown",  true,  "RIGHT ANALOG DOWN",  ":/help/analog_down.svg" },
-	{ "RightAnalogLeft",  true,  "RIGHT ANALOG LEFT",  ":/help/analog_left.svg" },
-	{ "RightAnalogRight", true,  "RIGHT ANALOG RIGHT", ":/help/analog_right.svg" },
-	{ "HotKeyEnable",     true,  "HOTKEY ENABLE",      ":/help/button_hotkey.svg" }
+	{ "Up",               false, "十字键 上",           ":/help/dpad_up.svg" },
+	{ "Down",             false, "十字键 下",         ":/help/dpad_down.svg" },
+	{ "Left",             false, "十字键 左",         ":/help/dpad_left.svg" },
+	{ "Right",            false, "十字键 右",        ":/help/dpad_right.svg" },
+	{ "Start",            true,  "开始",              ":/help/button_start.svg" },
+	{ "Select",           true,  "选择",             ":/help/button_select.svg" },
+	{ "A",                false, "按钮 A / 右侧",    ":/help/buttons_east.svg" },
+	{ "B",                true,  "按钮 B / 下侧",   ":/help/buttons_south.svg" },
+	{ "X",                true,  "按钮 X / 上侧",   ":/help/buttons_north.svg" },
+	{ "Y",                true,  "按钮 Y / 左侧",    ":/help/buttons_west.svg" },
+	{ "LeftShoulder",     true,  "L1",      ":/help/button_l.svg" },
+	{ "RightShoulder",    true,  "R1",     ":/help/button_r.svg" },
+	{ "LeftTrigger",      true,  "L2",       ":/help/button_lt.svg" },
+	{ "RightTrigger",     true,  "R2",      ":/help/button_rt.svg" },
+	{ "LeftThumb",        true,  "L3",         ":/help/analog_thumb.svg" },
+	{ "RightThumb",       true,  "R3",        ":/help/analog_thumb.svg" },
+	{ "LeftAnalogUp",     true,  "左摇杆 上",     ":/help/analog_up.svg" },
+	{ "LeftAnalogDown",   true,  "左摇杆 下",   ":/help/analog_down.svg" },
+	{ "LeftAnalogLeft",   true,  "左摇杆 左",   ":/help/analog_left.svg" },
+	{ "LeftAnalogRight",  true,  "左摇杆 右",  ":/help/analog_right.svg" },
+	{ "RightAnalogUp",    true,  "右摇杆 上",    ":/help/analog_up.svg" },
+	{ "RightAnalogDown",  true,  "右摇杆 下",  ":/help/analog_down.svg" },
+	{ "RightAnalogLeft",  true,  "右摇杆 左",  ":/help/analog_left.svg" },
+	{ "RightAnalogRight", true,  "右摇杆 右", ":/help/analog_right.svg" },
+	{ "HotKeyEnable",     true,  "启动热键(必须设定)",      ":/help/button_hotkey.svg" }
 };
 
 //MasterVolUp and MasterVolDown are also hooked up, but do not appear on this screen.
@@ -68,20 +68,20 @@ GuiInputConfig::GuiInputConfig(Window* window, InputConfig* target, bool reconfi
 	// 0 is a spacer row
 	mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 0), false);
 
-	mTitle = std::make_shared<TextComponent>(mWindow, "CONFIGURING", Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+	mTitle = std::make_shared<TextComponent>(mWindow, "按键设置", Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
 	mGrid.setEntry(mTitle, Vector2i(0, 1), false, true);
 
 	std::stringstream ss;
 	if(target->getDeviceId() == DEVICE_KEYBOARD)
-		ss << "KEYBOARD";
+		ss << "键盘";
 	else if(target->getDeviceId() == DEVICE_CEC)
 		ss << "CEC";
 	else
-		ss << "GAMEPAD " << (target->getDeviceId() + 1);
+		ss << "手柄控制器 " << (target->getDeviceId() + 1);
 	mSubtitle1 = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(ss.str()), Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
 	mGrid.setEntry(mSubtitle1, Vector2i(0, 2), false, true);
 
-	mSubtitle2 = std::make_shared<TextComponent>(mWindow, "HOLD ANY BUTTON TO SKIP", Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
+	mSubtitle2 = std::make_shared<TextComponent>(mWindow, "按住任意键跳过", Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
 	mSubtitle2->setOpacity(GUI_INPUT_CONFIG_LIST[0].skippable * 255);
 	mGrid.setEntry(mSubtitle2, Vector2i(0, 3), false, true);
 
@@ -108,7 +108,7 @@ GuiInputConfig::GuiInputConfig(Window* window, InputConfig* target, bool reconfi
 		auto text = std::make_shared<TextComponent>(mWindow, GUI_INPUT_CONFIG_LIST[i].dispName, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 		row.addElement(text, true);
 
-		auto mapping = std::make_shared<TextComponent>(mWindow, "-NOT DEFINED-", Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT), 0x999999FF, ALIGN_RIGHT);
+		auto mapping = std::make_shared<TextComponent>(mWindow, "-未设置按键-", Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT), 0x999999FF, ALIGN_RIGHT);
 		setNotDefined(mapping); // overrides text and color set above
 		row.addElement(mapping, true);
 		mMappings.push_back(mapping);
@@ -193,14 +193,14 @@ GuiInputConfig::GuiInputConfig(Window* window, InputConfig* target, bool reconfi
 		Input input;
 		if (!mTargetConfig->getInputByName("HotKeyEnable", &input)) {
 			mWindow->pushGui(new GuiMsgBox(mWindow,
-				"YOU DIDN'T CHOOSE A HOTKEY ENABLE BUTTON. THIS IS REQUIRED FOR EXITING GAMES WITH A CONTROLLER. DO YOU WANT TO USE THE SELECT BUTTON DEFAULT ? PLEASE ANSWER YES TO USE SELECT OR NO TO NOT SET A HOTKEY ENABLE BUTTON.",
-				"YES", [this, okFunction] {
+				"您没有设置热键启用按钮。这是使用控制器退出游戏时所必需的按键。是否要使用“选择”按钮作为默认键？请点击“是”以使用“选择”默认键，或点击“否”以不设置热键启用按钮。",
+				"是", [this, okFunction] {
 					Input input;
 					mTargetConfig->getInputByName("Select", &input);
 					mTargetConfig->mapInput("HotKeyEnable", input);
 					okFunction();
 					},
-				"NO", [this, okFunction] {
+				"否", [this, okFunction] {
 					// for a disabled hotkey enable button, set to a key with id 0,
 					// so the input configuration script can be backwards compatible.
 					mTargetConfig->mapInput("HotKeyEnable", Input(DEVICE_KEYBOARD, TYPE_KEY, 0, 1, true));
